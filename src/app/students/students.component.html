@@ -1,0 +1,107 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Students'" [icon]="'fa-table'"></app-page-header>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <form [formGroup]="studentsFilter" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="">Select Session</label>
+                        <ng-select #sessionSelect bindLabel="name" bindValue="id" [ngClass]="isError('session')"
+                            required [items]="sessions" [selectOnTab]="true" labelForId="sessionSelect"
+                            [readonly]="true" placeholder="Select Session" formControlName="session">
+                        </ng-select>
+                        <p class="help-block" *ngIf="isRequired('session')">Please select Session</p>
+                        <!-- <input class="form-control ml-2" type="text" formControlName="session" value="1" required /> -->
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">Select Class</label>
+                        <ng-select #classSelect [ngClass]="isError('class')" required [items]="classes"
+                            [selectOnTab]="true" labelForId="classSelect" placeholder="Select Class"
+                            formControlName="class">
+                        </ng-select>
+                        <p class="help-block" *ngIf="isRequired('class')">Please select Class</p>
+                        <!-- <input class="form-control ml-2" type="text" formControlName="class" required /> -->
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary btn-bottom"
+                            [disabled]="!studentsFilter.valid">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3 table-responsive">
+                <div class="card-header">
+                    <button type="button" class="btn btn-primary mr-3">
+                        Total Students <span class="badge badge-light">{{totalStudents}}</span>
+                    </button>
+                    <button type="button" class="btn btn-success mr-3">
+                        Total Boys <span class="badge badge-light">{{totalBoys}}</span>
+                    </button>
+                    <button type="button" class="btn btn-danger mr-3">
+                        Total Girls <span class="badge badge-light">{{totalGirls}}</span>
+                    </button>
+                    <button type="button" class="btn btn-warning mr-3">
+                        Total Transgenders <span class="badge badge-light">{{totalTransgender}}</span>
+                    </button>
+                    <!-- <div class="form-group col-md-4 form-inline pull-right">
+                            Search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                        </div> -->
+                </div>
+                <!-- <div class="card-body table-responsive"> -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Aadhar No.</th>
+                            <th scope="col">Mobile No.</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let student of students; index as i">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td class="text-capitalize">
+                                <ngb-highlight [result]="student.student_fname + ' ' + student.student_lname" [term]="filter.value">
+                                </ngb-highlight>
+                            </td>
+                            <td class="text-capitalize">
+                                <ngb-highlight [result]="student.gender" [term]="filter.value"></ngb-highlight>
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="student.category" [term]="filter.value"></ngb-highlight>
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="student.aadhar" [term]="filter.value"></ngb-highlight>
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="student.mobile1" [term]="filter.value"></ngb-highlight>
+                            </td>
+                            <td>
+                                <ngb-highlight [result]="student.per_address" [term]="filter.value"></ngb-highlight>
+                            </td>
+                            <td>
+                                <a class="_btn _btn-success btn-edit" [routerLink]="['/admission/',student.id]">
+                                    <i class="fa fa-edit"></i>
+                                    </a>
+                                <!-- <button type="button" class="btn btn-primary"><i class="fa fa-pen"></i></button> -->
+                                <!-- <a class="btn btn-success" [routerLink]="['/pay-fees/']">
+                                    <span>{{ 'Pay Fees' }}</span>
+                                </a> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>

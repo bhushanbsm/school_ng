@@ -1,0 +1,270 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Pay Fees'" [icon]="'fa-edit'"></app-page-header>
+    
+    <form [formGroup]="feesForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="card">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Session <span class="required">*</span></label>
+                            <ng-select #sessionSelect bindLabel="name" bindValue="id" [ngClass]="isError('session')"
+                                required [items]="sessions" [selectOnTab]="true" labelForId="sessionSelect"
+                                [readonly]="true" placeholder="Select Session" formControlName="session">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('session')">Please select Session</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Class <span class="required">*</span></label>
+                            <ng-select #classSelect [ngClass]="isError('class')" required [items]="classes"
+                                [selectOnTab]="true" labelForId="classSelect" (ngModelChange)="getStudents()"
+                                placeholder="Select Class" formControlName="class">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('class')">Please select Class</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Student <span class="required">*</span></label>
+                            <ng-select #studentSelect [ngClass]="isError('student')" bindLabel="name" bindValue="id"
+                                required [items]="students" [selectOnTab]="true" labelForId="studentSelect"
+                                (ngModelChange)="showFeesHead()" placeholder="Select Student" formControlName="student">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('student')">Please select Student</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3" #feesHeads *ngIf="showFeesHead()">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Fees Head <span class="required">*</span></label>
+                            <ng-select #feeHeadSelect [ngClass]="isError('feeHead')" bindLabel="name" bindValue="id"
+                                required [items]="feeHeads" [multiple]="true" clearAllText="Clear"
+                                [closeOnSelect]="false" (ngModelChange)="setValues()" [selectOnTab]="true" labelForId="feeHeadSelect"
+                                placeholder="Select Fees Heads"
+                                formControlName="feeHead">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('class')">Please select at least one Fees Head</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr *ngIf="showFeeHeadAmount()">
+                
+                <div class="row" *ngIf="showFeild(1)">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Admission Fees From <span class="required">*</span></label>
+                            <ng-select #feesFromSelect [ngClass]="isError('feesFrom')" [items]="months"
+                                [selectOnTab]="true" bindLabel="name" bindValue="id" labelForId="feesFromSelect"
+                                (ngModelChange)="calculateAdmissionAmount()" placeholder="Select Admission From" formControlName="feesFrom">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('feesFrom')">Please enter Admission Fees From month
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Admission Fees To <span class="required">*</span></label>
+                            <ng-select #feesToSelect [ngClass]="isError('feesTo')" [items]="months" [selectOnTab]="true"
+                                bindLabel="name" bindValue="id" labelForId="feesToSelect"
+                                (ngModelChange)="calculateAdmissionAmount()" placeholder="Select Admission To" formControlName="feesTo">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('feesTo')">Please enter Admission Fees To month</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Admission Fees <span class="required">*</span></label>
+                            <input class="form-control" formControlName="admission" [ngClass]="isError('admission')" (ngModelChange)="calculateTotalAmount()" placeholder="0"/>
+                            <p class="help-block" *ngIf="isRequired('admission')">Please enter Admission Fees</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr *ngIf="showFeild(1)">
+
+                <div class="row">
+                    <div class="col-md-4" *ngIf="showFeild(2)">
+                        <div class="form-group">
+                            <label class="control-label">Exam Fees <span class="required">*</span></label>
+                            <input class="form-control" formControlName="exam" placeholder="0" [ngClass]="isError('exam')" (ngModelChange)="calculateTotalAmount()" />
+                            <p class="help-block" *ngIf="isRequired('exam')">Please enter Exam Fees</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" *ngIf="showFeild(3)">
+                        <div class="form-group">
+                            <label class="control-label">Computer Fees <span class="required">*</span></label>
+                            <input class="form-control" formControlName="computer" placeholder="0" [ngClass]="isError('computer')" (ngModelChange)="calculateTotalAmount()" />
+                            <p class="help-block" *ngIf="isRequired('computer')">Please enter Computer Fees</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" *ngIf="showFeild(4)">
+                        <div class="form-group">
+                            <label class="control-label">E-class Fees <span class="required">*</span></label>
+                            <input class="form-control" formControlName="e_class" placeholder="0" [ngClass]="isError('e_class')" (ngModelChange)="calculateTotalAmount()" />
+                            <p class="help-block" *ngIf="isRequired('e_class')">Please enter E-class Fees</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" *ngIf="showFeild(5)">
+                        <div class="form-group">
+                            <label class="control-label">Other Fees <span class="required">*</span></label>
+                            <input class="form-control" formControlName="other" placeholder="0" [ngClass]="isError('other')" (ngModelChange)="calculateTotalAmount()" />
+                            <p class="help-block" *ngIf="isRequired('other')">Please enter Other Fees</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" *ngIf="showFeild(6)">
+                        <div class="form-group">
+                            <label class="control-label">Late Fees <span class="required">*</span></label>
+                            <input class="form-control" formControlName="late" placeholder="0" [ngClass]="isError('late')" (ngModelChange)="calculateTotalAmount()" />
+                            <p class="help-block" *ngIf="isRequired('late')">Please enter Late Fees</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card table-responsive mt-3" *ngIf="showFeeHeadAmount()">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Fees Head</th>
+                  <th scope="col">From Month</th>
+                  <th scope="col">To Month</th>
+                  <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let f of sc.feeHead.value; index as i">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{feeHeads[f-1].name}}</td>
+                  <td><span *ngIf="f==1 && sc.feesFrom.value">{{months[sc.feesFrom.value-1].name}}</span></td>
+                  <td><span *ngIf="f==1 && sc.feesTo.value">{{months[sc.feesTo.value-1].name}}</span></td>
+                  <td>{{sc[feeHeads[f-1].field].value}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                    <th scope="row" colspan="4" class="text-right">Total Amount</th>
+                    <th>{{totalAmount}}</th>
+                </tfoot>
+              </table>
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-primary btn-bottom" [disabled]="feesForm.invalid">Pay</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ng-template #content let-modal size="lg">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Receipt</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="printModal">
+        <div class="row">
+            <div class="col text-center">
+                <h4>Shree Sai Convent</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="control-label" for="">Session: {{receipt.year}}</label>
+            </div>
+            <div class="col">
+                <label class="control-label" for="">Class: {{receipt.class_id}}</label>
+            </div>
+            <div class="col">
+                <label class="control-label" for="">Date: {{receipt.created}}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="control-label text-capitalise" for="">Student Name: {{receipt.fname +" "+ receipt.lname}}</label>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th scope="col">Fees Head</th>
+                  <th scope="col">From Month</th>
+                  <th scope="col">To Month</th>
+                  <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngIf="receipt.admission != 0 && receipt.admission != null">
+                  <td>{{feeHeads[0].name}}</td>
+                  <td>{{months[receipt.fromMonth].name}}</td>
+                  <td>{{months[receipt.toMonth].name}}</td>
+                  <td>{{receipt.admission}}</td>
+                </tr>
+                <tr *ngIf="receipt.exam != 0 && receipt.exam != null">
+                    <td>{{feeHeads[1].name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{receipt.exam}}</td>
+                  </tr>
+                  <tr *ngIf="receipt.computer != 0 && receipt.computer != null">
+                    <td>{{feeHeads[2].name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{receipt.computer}}</td>
+                  </tr>
+                  <tr *ngIf="receipt.e_class != 0 && receipt.e_class != null">
+                    <td>{{feeHeads[3].name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{receipt.e_class}}</td>
+                  </tr>
+                  <tr *ngIf="receipt.other != 0 && receipt.other != null">
+                    <td>{{feeHeads[4].name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{receipt.other}}</td>
+                  </tr>
+                  <tr *ngIf="receipt.late != 0 && receipt.late != null">
+                    <td>{{feeHeads[5].name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{receipt.late}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                    <th scope="row" colspan="3" class="text-right">Total Amount</th>
+                    <th>{{receipt.total}}</th>
+                </tfoot>
+              </table>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="control-label text-capitalise" for="">Generated By: {{userName}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="printComponent('printModal')">Print</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+    </div>
+  </ng-template>
