@@ -44,7 +44,7 @@ export class AdmissionComponent implements OnInit {
     category: [null, Validators.required],
     caste: [null, Validators.required],
     sub_caste: [null],
-    aadhar: [null, [Validators.required, Validators.pattern("[0-9]{14}")]],
+    aadhar: [null, [Validators.required, Validators.pattern("[0-9]{12}")]],
     mobile1: [null, Validators.pattern("[0-9]{10}")],
     mobile2: [null, Validators.pattern("[0-9]{10}")],
     per_address: [null, Validators.required],
