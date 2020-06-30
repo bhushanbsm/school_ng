@@ -32,7 +32,7 @@
                             <label class="control-label">Student <span class="required">*</span></label>
                             <ng-select #studentSelect [ngClass]="isError('student')" bindLabel="name" bindValue="id"
                                 required [items]="students" [selectOnTab]="true" labelForId="studentSelect"
-                                (ngModelChange)="showFeesHead()" placeholder="Select Student" formControlName="student">
+                                (ngModelChange)="showFeesHead();getStudentFeesDetails()" placeholder="Select Student" formControlName="student">
                             </ng-select>
                             <p class="help-block" *ngIf="isRequired('student')">Please select Student</p>
                         </div>
@@ -138,8 +138,61 @@
             </div>
         </div>
 
+        <div class="card table-responsive mt-3" *ngIf="showFeesHead()">
+            <h5 class="card-title mt-2 ml-2">Fees Paid</h5>
+            <table class="table table-striped table-bordered table-hover table-sm">
+                <thead>
+                <tr>
+                  <th scope="col">Fees Head</th>
+                  <th scope="col" *ngFor="let month of months; index as i">
+                      {{month.name | slice:0:3}}
+                  </th>
+                  <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="feeDetails">
+                <tr *ngIf="feeDetails.admission != 0 && feeDetails.admission != null">
+                    <td>{{feeHeads[0].name}}</td>
+                    <td *ngFor="let month of months; index as i">
+                        {{getMonthAmount(month.id)}}
+                    </td>
+                    <!-- <td>{{feeHeads[0].name}}</td>
+                    <td>{{months[feeDetails.fromMonth].name}}</td>
+                    <td>{{months[feeDetails.toMonth].name}}</td> -->
+                    <td>{{feeDetails.admission}}</td>
+                  </tr>
+                  <tr *ngIf="feeDetails.exam != 0 && feeDetails.exam != null">
+                      <td>{{feeHeads[1].name}}</td>
+                      <td colspan="12"></td>
+                      <td>{{feeDetails.exam}}</td>
+                    </tr>
+                    <tr *ngIf="feeDetails.computer != 0 && feeDetails.computer != null">
+                      <td>{{feeHeads[2].name}}</td>
+                      <td colspan="12"></td>
+                      <td>{{feeDetails.computer}}</td>
+                    </tr>
+                    <tr *ngIf="feeDetails.e_class != 0 && feeDetails.e_class != null">
+                      <td>{{feeHeads[3].name}}</td>
+                      <td colspan="12"></td>
+                      <td>{{feeDetails.e_class}}</td>
+                    </tr>
+                    <tr *ngIf="feeDetails.other != 0 && feeDetails.other != null">
+                      <td>{{feeHeads[4].name}}</td>
+                      <td colspan="12"></td>
+                      <td>{{feeDetails.other}}</td>
+                    </tr>
+                    <tr *ngIf="feeDetails.late != 0 && feeDetails.late != null">
+                      <td>{{feeHeads[5].name}}</td>
+                      <td colspan="12"></td>
+                      <td>{{feeDetails.late}}</td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+
         <div class="card table-responsive mt-3" *ngIf="showFeeHeadAmount()">
-            <table class="table table-striped table-bordered table-hover">
+            <h5 class="card-title mt-2 ml-2">Review Fees</h5>
+            <table class="table table-striped table-bordered table-hover table-sm">
                 <thead>
                 <tr>
                   <th scope="col">#</th>

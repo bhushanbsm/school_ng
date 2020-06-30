@@ -65,6 +65,13 @@ export class ApiServeService {
     )
   }
 
+  getStudentFeesDetails(session,id): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/feedetails/` + session + "/" +  id)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {

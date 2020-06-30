@@ -20,6 +20,7 @@ export class PayFeesComponent implements OnInit {
   closeResult: string;
 
   receipt = [];
+  feeDetails;
   userName;
   particulars;
   totalAmount = 0;
@@ -206,6 +207,29 @@ export class PayFeesComponent implements OnInit {
         } else {
           this.students = resp.data.students;
         }
+      } else {
+        this.toastService.show(resp.error, { classname: 'bg-danger text-light ', delay: 3000 });
+      }
+    })
+  }
+
+  getMonthAmount(month) {
+    console.log(month);
+    console.log(this.feeDetails.months.includes(month));
+
+    if (this.feeDetails.months.includes(month.toString())) {
+      return this.particulars.admission / 12;
+    }
+    return 0;
+  }
+
+  getStudentFeesDetails() {
+    if (this.sc.student.value == '' || this.sc.student.value == null) {
+      return false;
+    }
+    this.apiServeService.getStudentFeesDetails(this.sc.session.value, this.sc.student.value).subscribe((resp) => {
+      if (resp.status == 200) {
+        this.feeDetails = resp.data.feeDetails;
       } else {
         this.toastService.show(resp.error, { classname: 'bg-danger text-light ', delay: 3000 });
       }

@@ -23,8 +23,7 @@
                         ],
                         "scripts": [
                             "node_modules/chart.js/dist/Chart.js",
-                            "node_modules/jquery/dist/jquery.js",
-                            "src/assets/js/session_share.js"
+                            "node_modules/jquery/dist/jquery.js"
                         ]
                     },
                     "configurations": {

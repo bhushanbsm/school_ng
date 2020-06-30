@@ -16,6 +16,7 @@ import { NgbInputDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 export class AdmissionComponent implements OnInit {
   id;
   type = 'add';
+  imgUrl: string | ArrayBuffer = "assets/images/logo.png";
   classes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   genders = ['Male', 'Female', 'Transgender'];
   sessions = [
@@ -64,6 +65,7 @@ export class AdmissionComponent implements OnInit {
           if (data.status == 200) {
             this.student.get('photo').setValidators([]);
             this.student.get('photo').updateValueAndValidity();
+            this.imgUrl = data.data.student.photo;
             this.student.patchValue({
               session: parseInt(data.data.student.session),
               class: data.data.student.class,
@@ -127,7 +129,27 @@ export class AdmissionComponent implements OnInit {
 
   onFileSelect(event) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
+      const file = event.target.files[0];      
+      if((file.size/(1024*1024)) > 2) {
+        this.toastService.show("File size is greater than 2MB.", { classname: 'bg-danger text-light ', delay: 3000 });
+        this.student.get('photo').setValue(null);
+        this.imgUrl = "assets/images/logo.png";
+        return false;
+      }
+      const typeFile = file.type.split('/');      
+      if(typeFile[1] !== 'png' && typeFile[1] !== 'jpg' && typeFile[1] !== 'jpeg' && typeFile[1] !== 'gif'){
+        this.toastService.show("File type muste be image.", { classname: 'bg-danger text-light ', delay: 3000 });
+        this.student.get('photo').setValue(null);
+        this.imgUrl = "assets/images/logo.png";
+        return false;
+      }
+      var reader = new FileReader();
+      reader.onload = e=> {
+         // get loaded data and render thumbnail.
+         this.imgUrl = e.target.result;
+      } 
+      // read the image file as a data URL.
+      reader.readAsDataURL(file);
       this.student.get('photo').setValue(file);
     }
   }
