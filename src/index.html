@@ -19,5 +19,48 @@
         </div>
     </app-root>
 </body>
+<script>
+    /*
+    * @author Bhushan
+    * Share sessionStorage between tabs using localStorage events
+    *
+    * The way I solved it is by using localStorage events. 
+    * When a user opens a new tab, we first ask any other tab that is opened if he already have 
+    * the sessionStorage for us. If any other tab is opened it’ll send us the sessionStorage 
+    * through localStorage event, we’ll duplicate that into the sessionStorage. 
+    * The sessionStorage data will not stay in the localStorage, not even for 1 millisecond as 
+    * it being deleted in the same call. 
+    * The data is shared through the event payload and not the localStorage itself.
+    * @Reference
+    * https://blog.guya.net/2015/06/12/sharing-sessionstorage-between-tabs-for-secure-multi-tab-authentication/
+    */
 
+   if (!sessionStorage.length) {
+   
+   // Ask other tabs for session storage
+   localStorage.setItem('getSessionStorage', Date.now());
+};
+
+window.addEventListener('storage', function(event) {
+
+   //console.log('storage event', event);
+
+   if (event.key == 'getSessionStorage') {
+       // Some tab asked for the sessionStorage -> send it
+
+       localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+       localStorage.removeItem('sessionStorage');
+
+   } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+       // sessionStorage is empty -> fill it
+
+       var data = JSON.parse(event.newValue),
+       value;
+
+       for (key in data) {
+           sessionStorage.setItem(key, data[key]);
+       }
+   }
+});
+</script>
 </html>
