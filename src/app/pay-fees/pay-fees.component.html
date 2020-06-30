@@ -156,9 +156,6 @@
                     <td *ngFor="let month of months; index as i">
                         {{getMonthAmount(month.id)}}
                     </td>
-                    <!-- <td>{{feeHeads[0].name}}</td>
-                    <td>{{months[feeDetails.fromMonth].name}}</td>
-                    <td>{{months[feeDetails.toMonth].name}}</td> -->
                     <td>{{feeDetails.admission}}</td>
                   </tr>
                   <tr *ngIf="feeDetails.exam != 0 && feeDetails.exam != null">
