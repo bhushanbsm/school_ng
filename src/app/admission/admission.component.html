@@ -2,262 +2,312 @@
     <app-page-header [heading]="'Admission Form'" [icon]="'fa-edit'"></app-page-header>
     <div class="card">
         <div class="card-body">
-    <form [formGroup]="student" (ngSubmit)="onSubmit()" novalidate>
-        <div class="row">
-            <div class="col-md-9">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label">Session <span class="required">*</span></label>
-                    <ng-select #sessionSelect bindLabel="name"
-                    bindValue="id" [ngClass]="isError('session')" required [items]="sessions" [selectOnTab]="true" labelForId="sessionSelect" [readonly]="true"
-                        placeholder="Select Session" formControlName="session">
-                    </ng-select>
-                    <p class="help-block" *ngIf="isRequired('session')">Please select Session</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label">Class <span class="required">*</span></label>
-                    <ng-select #classSelect [ngClass]="isError('class')" required [items]="classes" [selectOnTab]="true" labelForId="classSelect"
-                        placeholder="Select Class" formControlName="class">
-                    </ng-select>
-                    <p class="help-block" *ngIf="isRequired('class')">Please select Class</p>
-                </div>
-            </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label class="control-label" for="photo"><img src="{{imgUrl}}" class="img-fluid rounded img-thumbnail" alt=""></label>
-                    <input class="form-control-file form-control" accept="image/*" (change)="onFileSelect($event)" id="photo" type="file" />
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Student First Name <span class="required">*</span></label>
-                    <input class="form-control" formControlName="student_fname" [ngClass]="isError('student_fname')"
-                        required />
-                    <p class="help-block" *ngIf="isRequired('student_fname')">Please enter Student First Name</p>
-                    <p class="help-block" *ngIf="isPattern('student_fname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Student Middle Name <span class="required">*</span></label>
-                    <input class="form-control" formControlName="student_mname" [ngClass]="isError('student_mname')"
-                        required />
-                    <p class="help-block" *ngIf="isRequired('student_mname')">Please enter Student Middle Name</p>
-                    <p class="help-block" *ngIf="isPattern('student_mname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Student Last Name <span class="required">*</span></label>
-                    <input class="form-control" formControlName="student_lname" [ngClass]="isError('student_lname')"
-                        required />
-                    <p class="help-block" *ngIf="isRequired('student_lname')">Please enter Student Last Name</p>
-                    <p class="help-block" *ngIf="isPattern('student_lname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Father/Guardian First Name <span class="required">*</span></label>
-                    <input class="form-control" formControlName="father_fname" [ngClass]="isError('father_fname')"
-                        required />
-                    <p class="help-block" *ngIf="isRequired('father_fname')">Please enter Father/Guardian First Name</p>
-                    <p class="help-block" *ngIf="isPattern('father_fname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Father/Guardian Middle Name <span class="required">*</span></label>
-                    <input class="form-control" formControlName="father_mname" [ngClass]="isError('father_mname')"
-                        required />
-                    <p class="help-block" *ngIf="isRequired('father_mname')">Please enter Father/Guardian First Name</p>
-                    <p class="help-block" *ngIf="isPattern('father_mname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Father/Guardian Last Name <span class="required">*</span></label>
-                    <input class="form-control" formControlName="father_lname" [ngClass]="isError('father_lname')"
-                        required />
-                    <p class="help-block" *ngIf="isRequired('father_lname')">Please enter Father/Guardian First Name</p>
-                    <p class="help-block" *ngIf="isPattern('father_lname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Mother First Name <span class="required">*</span></label>
-                    <input class="form-control" formControlName="mother_fname" [ngClass]="isError('mother_fname')"
-                        required />
-                    <p class="help-block" *ngIf="isRequired('mother_fname')">Please enter Student First Name</p>
-                    <p class="help-block" *ngIf="isPattern('mother_fname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Mother Middle Name</label>
-                    <input class="form-control" formControlName="mother_mname" [ngClass]="isError('mother_mname')" />
-                    <p class="help-block" *ngIf="isPattern('mother_mname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Mother Last Name</label>
-                    <input class="form-control" formControlName="mother_lname" [ngClass]="isError('mother_lname')" />
-                    <p class="help-block" *ngIf="isPattern('mother_lname')">Please enter only characters</p>
-                </fieldset>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Gender <span class="required">*</span></label>
-                    <ng-select #genderSelect [ngClass]="isError('gender')" [items]="genders" [selectOnTab]="true" labelForId="genderSelect"
-                        placeholder="Select Gender" formControlName="gender">
-                    </ng-select>
-                    <p class="help-block" *ngIf="isRequired('gender')">Please select Gender</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Date of Birth <span class="required">*</span></label>
-                    <div class="input-group datepicker-input input-group">
-                        <input #d="ngbDatepicker" [minDate]="{year: 1950, month: 1, day: 1}"
-                        [maxDate]="{year: 2050, month: 12, day: 31}" class="form-control" formControlName="dob" ngbDatepicker
-                            placeholder="dd-mm-yyyy" required [ngClass]="isError('dob')" (click)="d.toggle()" />
-                        <div class="input-group-append" (click)="d.toggle()">
-                            <span class="input-group-text fa fa-calendar"></span>
+            <form [formGroup]="student" (ngSubmit)="onSubmit()" novalidate>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Session <span class="required">*</span></label>
+                                    <ng-select #sessionSelect bindLabel="name" bindValue="id"
+                                        [ngClass]="isError('session')" required [items]="sessions" [selectOnTab]="true"
+                                        labelForId="sessionSelect" [readonly]="true" placeholder="Select Session"
+                                        formControlName="session">
+                                    </ng-select>
+                                    <p class="help-block" *ngIf="isRequired('session')">Please select Session</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Class <span class="required">*</span></label>
+                                    <ng-select #classSelect [ngClass]="isError('class')" required [items]="classes"
+                                        [selectOnTab]="true" labelForId="classSelect" placeholder="Select Class"
+                                        formControlName="class">
+                                    </ng-select>
+                                    <p class="help-block" *ngIf="isRequired('class')">Please select Class</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Admission No. <span class="required">*</span></label>
+                                    <input class="form-control" formControlName="admission_no" required [ngClass]="isError('admission_no')">
+                                    <p class="help-block" *ngIf="isRequired('admission_no')">Please enter Admission No.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Admission Date <span class="required">*</span></label>
+                                    <div class="input-group datepicker-input input-group">
+                                        <input #e="ngbDatepicker" [minDate]="{year: 1950, month: 1, day: 1}"
+                                            [maxDate]="{year: 2050, month: 12, day: 31}" class="form-control"
+                                            formControlName="admission_date" ngbDatepicker placeholder="dd-mm-yyyy" required
+                                            [ngClass]="isError('admission_date')" (click)="e.toggle()" />
+                                        <div class="input-group-append" (click)="e.toggle()">
+                                            <span class="input-group-text fa fa-calendar"></span>
+                                        </div>
+                                    </div>
+                                    <p class="help-block" *ngIf="isRequired('class')">Please select Admission Date</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <p class="help-block" *ngIf="isRequired('dob')">Please select Date of Birth</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Place of Birth <span class="required">*</span></label>
-                    <input class="form-control" formControlName="birth_place" required
-                        [ngClass]="isError('birth_place')">
-                    <p class="help-block" *ngIf="isRequired('birth_place')">Please enter Place of Birth</p>
-                    <p class="help-block" *ngIf="isPattern('birth_place')">Please enter only characters</p>
-                </fieldset>
-            </div>
-        </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="photo"><img src="{{imgUrl}}"
+                                    class="img-fluid rounded img-thumbnail" alt=""></label>
+                            <input class="form-control-file form-control" accept="image/*"
+                                (change)="onFileSelect($event)" id="photo" type="file" />
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Student First Name <span class="required">*</span></label>
+                            <input class="form-control" formControlName="student_fname"
+                                [ngClass]="isError('student_fname')" required />
+                            <p class="help-block" *ngIf="isRequired('student_fname')">Please enter Student First Name
+                            </p>
+                            <p class="help-block" *ngIf="isPattern('student_fname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Student Middle Name <span class="required">*</span></label>
+                            <input class="form-control" formControlName="student_mname"
+                                [ngClass]="isError('student_mname')" required />
+                            <p class="help-block" *ngIf="isRequired('student_mname')">Please enter Student Middle Name
+                            </p>
+                            <p class="help-block" *ngIf="isPattern('student_mname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Student Last Name <span class="required">*</span></label>
+                            <input class="form-control" formControlName="student_lname"
+                                [ngClass]="isError('student_lname')" required />
+                            <p class="help-block" *ngIf="isRequired('student_lname')">Please enter Student Last Name</p>
+                            <p class="help-block" *ngIf="isPattern('student_lname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Father/Guardian First Name <span
+                                    class="required">*</span></label>
+                            <input class="form-control" formControlName="father_fname"
+                                [ngClass]="isError('father_fname')" required />
+                            <p class="help-block" *ngIf="isRequired('father_fname')">Please enter Father/Guardian First
+                                Name</p>
+                            <p class="help-block" *ngIf="isPattern('father_fname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Father/Guardian Middle Name <span
+                                    class="required">*</span></label>
+                            <input class="form-control" formControlName="father_mname"
+                                [ngClass]="isError('father_mname')" required />
+                            <p class="help-block" *ngIf="isRequired('father_mname')">Please enter Father/Guardian First
+                                Name</p>
+                            <p class="help-block" *ngIf="isPattern('father_mname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Father/Guardian Last Name <span
+                                    class="required">*</span></label>
+                            <input class="form-control" formControlName="father_lname"
+                                [ngClass]="isError('father_lname')" required />
+                            <p class="help-block" *ngIf="isRequired('father_lname')">Please enter Father/Guardian First
+                                Name</p>
+                            <p class="help-block" *ngIf="isPattern('father_lname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Mother First Name <span class="required">*</span></label>
+                            <input class="form-control" formControlName="mother_fname"
+                                [ngClass]="isError('mother_fname')" required />
+                            <p class="help-block" *ngIf="isRequired('mother_fname')">Please enter Student First Name</p>
+                            <p class="help-block" *ngIf="isPattern('mother_fname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Mother Middle Name</label>
+                            <input class="form-control" formControlName="mother_mname"
+                                [ngClass]="isError('mother_mname')" />
+                            <p class="help-block" *ngIf="isPattern('mother_mname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Mother Last Name</label>
+                            <input class="form-control" formControlName="mother_lname"
+                                [ngClass]="isError('mother_lname')" />
+                            <p class="help-block" *ngIf="isPattern('mother_lname')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Gender <span class="required">*</span></label>
+                            <ng-select #genderSelect [ngClass]="isError('gender')" [items]="genders"
+                                [selectOnTab]="true" labelForId="genderSelect" placeholder="Select Gender"
+                                formControlName="gender">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('gender')">Please select Gender</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Date of Birth <span class="required">*</span></label>
+                            <div class="input-group datepicker-input input-group">
+                                <input #d="ngbDatepicker" [minDate]="{year: 1950, month: 1, day: 1}"
+                                    [maxDate]="{year: 2050, month: 12, day: 31}" class="form-control"
+                                    formControlName="dob" ngbDatepicker placeholder="dd-mm-yyyy" required
+                                    [ngClass]="isError('dob')" (click)="d.toggle()" />
+                                <div class="input-group-append" (click)="d.toggle()">
+                                    <span class="input-group-text fa fa-calendar"></span>
+                                </div>
+                            </div>
+                            <p class="help-block" *ngIf="isRequired('dob')">Please select Date of Birth</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Place of Birth <span class="required">*</span></label>
+                            <input class="form-control" formControlName="birth_place" required
+                                [ngClass]="isError('birth_place')">
+                            <p class="help-block" *ngIf="isRequired('birth_place')">Please enter Place of Birth</p>
+                            <p class="help-block" *ngIf="isPattern('birth_place')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Nationality <span class="required">*</span></label>
-                    <input class="form-control" formControlName="nationality" required
-                        [ngClass]="isError('nationality')">
-                    <p class="help-block" *ngIf="isRequired('nationality')">Please enter Nationality</p>
-                    <p class="help-block" *ngIf="isPattern('nationality')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Religion <span class="required">*</span></label>
-                    <input class="form-control" formControlName="religion" required [ngClass]="isError('religion')">
-                    <p class="help-block" *ngIf="isRequired('religion')">Please enter Religion</p>
-                    <p class="help-block" *ngIf="isPattern('religion')">Please enter only characters</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Mother Tongue</label>
-                    <input class="form-control" formControlName="mother_tongue" [ngClass]="isError('mother_tongue')">
-                    <p class="help-block" *ngIf="isPattern('mother_tongue')">Please enter only characters</p>
-                </fieldset>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Nationality <span class="required">*</span></label>
+                            <input class="form-control" formControlName="nationality" required
+                                [ngClass]="isError('nationality')">
+                            <p class="help-block" *ngIf="isRequired('nationality')">Please enter Nationality</p>
+                            <p class="help-block" *ngIf="isPattern('nationality')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Religion <span class="required">*</span></label>
+                            <input class="form-control" formControlName="religion" required
+                                [ngClass]="isError('religion')">
+                            <p class="help-block" *ngIf="isRequired('religion')">Please enter Religion</p>
+                            <p class="help-block" *ngIf="isPattern('religion')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Mother Tongue</label>
+                            <input class="form-control" formControlName="mother_tongue"
+                                [ngClass]="isError('mother_tongue')">
+                            <p class="help-block" *ngIf="isPattern('mother_tongue')">Please enter only characters</p>
+                        </fieldset>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Category <span class="required">*</span></label>
-                    <ng-select #categorySelect [ngClass]="isError('category')" required [items]="categories" [selectOnTab]="true" labelForId="categorySelect"
-                    placeholder="Select Category" formControlName="category">
-                </ng-select>
-                    <p class="help-block" *ngIf="isRequired('category')">Please select Category</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Caste <span class="required">*</span></label>
-                    <input class="form-control" formControlName="caste" required [ngClass]="isError('caste')" />
-                    <p class="help-block" *ngIf="isRequired('caste')">Please enter Caste</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Sub-Caste</label>
-                    <input class="form-control" formControlName="sub_caste" [ngClass]="isError('sub_caste')" />
-                </fieldset>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Category <span class="required">*</span></label>
+                            <ng-select #categorySelect [ngClass]="isError('category')" required [items]="categories"
+                                [selectOnTab]="true" labelForId="categorySelect" placeholder="Select Category"
+                                formControlName="category">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('category')">Please select Category</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Caste <span class="required">*</span></label>
+                            <input class="form-control" formControlName="caste" required [ngClass]="isError('caste')" />
+                            <p class="help-block" *ngIf="isRequired('caste')">Please enter Caste</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Sub-Caste</label>
+                            <input class="form-control" formControlName="sub_caste" [ngClass]="isError('sub_caste')" />
+                        </fieldset>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Aadhar Card No. <span class="required">*</span></label>
-                    <input class="form-control" formControlName="aadhar" required [ngClass]="isError('aadhar')" />
-                    <p class="help-block" *ngIf="isRequired('aadhar')">Please enter Aadhar Card No.</p>
-                    <p class="help-block" *ngIf="isPattern('aadhar')">Please enter only numbers</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Mobile No. 1</label>
-                    <input class="form-control" formControlName="mobile1" [ngClass]="isError('mobile1')" />
-                    <p class="help-block" *ngIf="isPattern('mobile1')">Please enter 10 digit mobile number</p>
-                </fieldset>
-            </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label class="control-label">Mobile No. 2</label>
-                    <input class="form-control" formControlName="mobile2" [ngClass]="isError('mobile2')" />
-                    <p class="help-block" *ngIf="isPattern('mobile2')">Please enter 10 digit mobile number</p>
-                </fieldset>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <fieldset class="form-group">
-                    <label class="control-label">Permanent Address <span class="required">*</span></label>
-                    <textarea class="form-control" rows="3" formControlName="per_address" required
-                        [ngClass]="isError('per_address')"></textarea>
-                    <p class="help-block" *ngIf="isRequired('per_address')">Please enter Permanent Address</p>
-                </fieldset>
-            </div>
-            <div class="col-md-6">
-                <fieldset class="form-group">
-                    <label class="control-label">Residential Address</label>
-                    <textarea class="form-control" rows="3" formControlName="res_address"
-                        [ngClass]="isError('res_address')"></textarea>
-                </fieldset>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Aadhar Card No. <span class="required">*</span></label>
+                            <input class="form-control" formControlName="aadhar" required
+                                [ngClass]="isError('aadhar')" />
+                            <p class="help-block" *ngIf="isRequired('aadhar')">Please enter Aadhar Card No.</p>
+                            <p class="help-block" *ngIf="isPattern('aadhar')">Please enter only numbers</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Mobile No. 1</label>
+                            <input class="form-control" formControlName="mobile1" [ngClass]="isError('mobile1')" />
+                            <p class="help-block" *ngIf="isPattern('mobile1')">Please enter 10 digit mobile number</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label class="control-label">Mobile No. 2</label>
+                            <input class="form-control" formControlName="mobile2" [ngClass]="isError('mobile2')" />
+                            <p class="help-block" *ngIf="isPattern('mobile2')">Please enter 10 digit mobile number</p>
+                        </fieldset>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label class="control-label">Permanent Address <span class="required">*</span></label>
+                            <textarea class="form-control" rows="3" formControlName="per_address" required
+                                [ngClass]="isError('per_address')"></textarea>
+                            <p class="help-block" *ngIf="isRequired('per_address')">Please enter Permanent Address</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label class="control-label">Residential Address</label>
+                            <textarea class="form-control" rows="3" formControlName="res_address"
+                                [ngClass]="isError('res_address')"></textarea>
+                        </fieldset>
+                    </div>
+                </div>
 
-        <!-- <app-alert *ngIf="alertActive"></app-alert> -->
+                <!-- <app-alert *ngIf="alertActive"></app-alert> -->
 
-        <div class="row">
-            <div class="form-group col-md-4">
-                <!-- <button type="submit" class="btn btn-primary btn-bottom">Register</button> -->
-                <button type="submit" *ngIf="type=='add'" class="btn btn-primary btn-bottom" [disabled]="student.invalid">Save</button>
-                <button type="submit" *ngIf="type=='update'" class="btn btn-primary btn-bottom" [disabled]="student.invalid">Update</button>
-            </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <!-- <button type="submit" class="btn btn-primary btn-bottom">Register</button> -->
+                        <button type="submit" *ngIf="type=='add'" class="btn btn-primary btn-bottom"
+                            [disabled]="student.invalid">Save</button>
+                        <button type="submit" *ngIf="type=='update'" class="btn btn-primary btn-bottom"
+                            [disabled]="student.invalid">Update</button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.row -->
         </div>
-    </form>
-    <!-- /.row -->
     </div>
-</div>
 </div>

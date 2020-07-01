@@ -14,7 +14,7 @@ import { NgbInputDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
   providers: [NgbInputDatepickerConfig]
 })
 export class AdmissionComponent implements OnInit {
-  id;
+  admission_no;
   type = 'add';
   imgUrl: string | ArrayBuffer = "assets/images/logo.png";
   classes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -26,6 +26,8 @@ export class AdmissionComponent implements OnInit {
   student = this.fb.group({
     session: [1, Validators.required],
     class: [null, Validators.required],
+    admission_no: [null, Validators.required],
+    admission_date: [null, Validators.required],
     student_fname: [null, [Validators.required, Validators.pattern("[a-zA-Z]*")]],
     student_mname: [null, [Validators.required]],
     student_lname: [null, [Validators.required, Validators.pattern("[a-zA-Z]*")]],
@@ -58,10 +60,10 @@ export class AdmissionComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.id = params.get('id');
-      if (this.id != null) {
+      this.admission_no = params.get('id');
+      if (this.admission_no != null) {
         this.type = 'update';
-        this.apiServeService.getStudent(this.id).subscribe((data) => {
+        this.apiServeService.getStudent(this.admission_no).subscribe((data) => {
           if (data.status == 200) {
             this.student.get('photo').setValidators([]);
             this.student.get('photo').updateValueAndValidity();
@@ -69,6 +71,8 @@ export class AdmissionComponent implements OnInit {
             this.student.patchValue({
               session: parseInt(data.data.student.session),
               class: data.data.student.class,
+              admission_no:data.data.student.admission_no != 'null' ? data.data.student.admission_no : '',
+              admission_date:data.data.student.admission_date != 'null' ? data.data.student.admission_date : '',
               student_fname:data.data.student.student_fname != 'null' ? data.data.student.student_fname : '',
               student_mname:data.data.student.student_mname != 'null' ? data.data.student.student_mname : '',
               student_lname:data.data.student.student_lname != 'null' ? data.data.student.student_lname : '',
@@ -174,7 +178,7 @@ export class AdmissionComponent implements OnInit {
         }
       })
     } else {
-      this.apiServeService.updateStudent(this.id,formData).subscribe((data) => {
+      this.apiServeService.updateStudent(this.admission_no,formData).subscribe((data) => {
         if (data.status == 200) {
           this.toastService.show('Student updated successfully', { classname: 'bg-success text-light ', delay: 3000 });
         } else {
