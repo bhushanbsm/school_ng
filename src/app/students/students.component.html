@@ -4,25 +4,31 @@
         <div class="col-xs-12 col-md-12">
             <form [formGroup]="studentsFilter" (ngSubmit)="onSubmit()">
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="">Select Session</label>
-                        <ng-select #sessionSelect bindLabel="name" bindValue="id" [ngClass]="isError('session')"
-                            required [items]="sessions" [selectOnTab]="true" labelForId="sessionSelect"
-                            [readonly]="true" placeholder="Select Session" formControlName="session">
-                        </ng-select>
-                        <p class="help-block" *ngIf="isRequired('session')">Please select Session</p>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Select Session</label>
+                            <ng-select #sessionSelect bindLabel="name" bindValue="id" [ngClass]="isError('session')"
+                                required [items]="sessions" [selectOnTab]="true" labelForId="sessionSelect"
+                                [readonly]="true" placeholder="Select Session" formControlName="session">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('session')">Please select Session</p>
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="">Select Class</label>
-                        <ng-select #classSelect [ngClass]="isError('class')" required [items]="classes"
-                            [selectOnTab]="true" labelForId="classSelect" placeholder="Select Class"
-                            formControlName="class">
-                        </ng-select>
-                        <p class="help-block" *ngIf="isRequired('class')">Please select Class</p>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Select Class</label>
+                            <ng-select #classSelect [ngClass]="isError('class')" required [items]="classes"
+                                [selectOnTab]="true" labelForId="classSelect" placeholder="Select Class"
+                                formControlName="class">
+                            </ng-select>
+                            <p class="help-block" *ngIf="isRequired('class')">Please select Class</p>
+                        </div>
                     </div>
-                    <div class="form-group col-md-2">
-                        <button type="submit" class="btn btn-primary btn-bottom"
-                            [disabled]="!studentsFilter.valid">Search</button>
+                    <div class="col-md-4 align-self-center">
+                        <div class="form-group mb-0">
+                            <button type="submit" class="btn btn-primary _btn-bottom"
+                                [disabled]="!studentsFilter.valid">Search</button>
+                        </div>
                     </div>
                 </div>
             </form>

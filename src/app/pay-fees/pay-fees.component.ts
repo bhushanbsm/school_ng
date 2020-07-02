@@ -173,7 +173,7 @@ export class PayFeesComponent implements OnInit {
       this.feesForm.get('admission').setValue(0);
       return false;
     }
-    if (this.sc.feesFrom.value >= this.sc.feesTo.value) {
+    if (this.sc.feesFrom.value > this.sc.feesTo.value) {
       this.feesForm.get('admission').setValue(0);
       return false;
     }
@@ -214,9 +214,6 @@ export class PayFeesComponent implements OnInit {
   }
 
   getMonthAmount(month) {
-    console.log(month);
-    console.log(this.feeDetails.months.includes(month));
-
     if (this.feeDetails.months.includes(month.toString())) {
       return this.particulars.admission / 12;
     }
