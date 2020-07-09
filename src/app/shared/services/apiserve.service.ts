@@ -42,6 +42,13 @@ export class ApiServeService {
     .pipe(
       catchError(this.errorHandler)
     )
+  } 
+  
+  updateParticulars(data): Observable<any> {
+    return this.httpClient.post<any>(`${environment.apiUrl}/updateParticulars/`, data)
+    .pipe(
+      catchError(this.errorHandler)
+    )
   }  
 
   getParticulars(): Observable<any> {

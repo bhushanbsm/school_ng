@@ -1,0 +1,55 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Settings'" [icon]="'fa fa-fw fa-gear'"></app-page-header>
+    <div class="card">
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Session</th>
+                        <th>Admission</th>
+                        <th>Exam</th>
+                        <th>Computer</th>
+                        <th>E-class</th>
+                        <th>Other</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let particular of particulars; index as i">
+                        <th scope="row">{{i + 1}}</th>
+                        <td>
+                            <span>{{particular.year}}</span>
+                            <!-- <input *ngIf="editActive==i" class="form-control" type="text" [(ngModel)]="particularsForm.session"> -->
+                        </td>
+                        <td>
+                            <span *ngIf="editActive!=i">{{particular.admission}} /-</span>
+                            <input *ngIf="editActive==i" class="form-control" type="text" [(ngModel)]="particularsForm.admission">
+                        </td>
+                        <td>
+                            <span *ngIf="editActive!=i">{{particular.exam}} /-</span>
+                            <input *ngIf="editActive==i" class="form-control" type="text" [(ngModel)]="particularsForm.exam">
+                        </td>
+                        <td>
+                            <span *ngIf="editActive!=i">{{particular.computer}} /-</span>
+                            <input *ngIf="editActive==i" class="form-control" type="text" [(ngModel)]="particularsForm.computer">
+                        </td>
+                        <td>
+                            <span *ngIf="editActive!=i">{{particular.e_class}} /-</span>
+                            <input *ngIf="editActive==i" class="form-control" type="text" [(ngModel)]="particularsForm.e_class">
+                        </td>
+                        <td>
+                            <span *ngIf="editActive!=i">{{particular.other}} /-</span>
+                            <input *ngIf="editActive==i" class="form-control" type="text" [(ngModel)]="particularsForm.other">
+                        </td>
+                        <td class="btn-edit">
+                            <i class="fa fa-edit" *ngIf="editActive!=i" (click)="setValues(i)"></i>
+                            <i class="fa fa-check" *ngIf="editActive==i" (click)="update()"></i>
+                            <i class="fa fa-close" *ngIf="editActive==i" (click)="editActive=null"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

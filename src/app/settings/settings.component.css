@@ -1,0 +1,7 @@
+.btn-edit {
+    font-size: 1.2rem;
+    color: blue;
+}
+.btn-edit .fa {
+    margin: 5px;
+}

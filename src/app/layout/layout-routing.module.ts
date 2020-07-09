@@ -16,6 +16,7 @@ const routes: Routes = [
             { path: 'admission', loadChildren: () => import('../admission/admission.module').then((m) => m.AdmissionModule) },
             { path: 'admission/:id', loadChildren: () => import('../admission/admission.module').then((m) => m.AdmissionModule) },
             { path: 'pay-fees', loadChildren: () => import('../pay-fees/pay-fees.module').then((m) => m.PayFeesModule) },
+            { path: 'settings', loadChildren: () => import('../settings/settings.module').then((m) => m.SettingsModule) },
         ]
     },
 ];
